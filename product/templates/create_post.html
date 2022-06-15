@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}login{% endblock title %}
+{% block main-content %}
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{message}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+            <h3>Add Post</h3>
+            <hr>
+            <form action="" method="post" novalidate class="shadow p-5" enctype="multipart/form-data">
+                {% if messages %}
+                    {% for message in messages %}
+                    {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+                {% for fm in form %}
+                <div class="{}}">
+                    {{fm.label_tag}}{{fm}}<small class="text-danger">{{fm.errors | striptags }}</small>
+                </div>
+                {% endfor %}
+                 <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-danger">Create</button>
+                </div>
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <p class="alert alert-danger my-3">{{error}}</p>
+                {% endfor %}
+                {% endif %}
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

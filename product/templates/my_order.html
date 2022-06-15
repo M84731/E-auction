@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}login{% endblock title %}
+{% block main-content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{message}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+            <h4>My Inquires</h4><hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>BuyerName</th>
+                        <th> BuyerInterested Price</th>
+<!--                        <th> Actual Price</th>-->
+
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for od in order %}
+
+                    {% if od.seller == request.user %}
+                        <tr>
+                            <td>{{od.Product_name}}</td>
+                            <td>{{od.buyer_username}}</td>
+                            <td>{{od.buyer_price}}</td>
+<!--                            <td>{{p.price}}</td>-->
+
+                            <td><form action ="{% url 'my-order-accept' %}"  method="POST" class="d-inline">
+                                    {% if user.is_authenticated %}
+                                                    {% csrf_token %}
+                                <input type = "text" name = "prod_id" value = {{od.id}} id="prod_id">
+
+                                                  <button > Accepted</button>
+                                                    <br>
+                                                    <br>
+                                                    <button>Rejected</button>
+                                    {%endif %}
+
+                    {% endif %}
+
+            </form></td>
+
+
+
+    <!--                        <td>-->
+    <!--                            <a href="#?action=inc" class="btn btn-primary"> + </a>-->
+    <!--                            <a href="#" class="btn btn-warning"> - </a>-->
+    <!--                            <a href="#" class="btn btn-danger"> x </a>-->
+    <!--                        </td>-->
+                        </tr>
+
+                     {% endfor %}
+<!--                    <tr>-->
+<!--                        <th colspan="4" class="text-right">Total</th>-->
+<!--                        <th>Rs. {{cart.total}}</th>-->
+<!--                        {% if cart.cartproduct_set.all %}-->
+<!--                        <th><a href="#">Empty Cart</a></th>-->
+<!--                        {% endif %}-->
+<!--                    </tr>-->
+<!--                    {% if cart.cartproduct_set.all %}-->
+<!--                    <tr>-->
+<!--                        <th><a class="btn btn-info" href="#"> Checkout </a></th>-->
+<!--                    </tr>-->
+<!--                    {% endif %}-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--<script>-->
+<!-- function send_status(){-->
+
+<!--             $.ajax({-->
+<!--             url: '/my-order-accept/',-->
+<!--             method : 'POST',-->
+<!--             data: {status: $('#status').val()},-->
+<!--             console.log('data')-->
+<!--              });-->
+
+<!--}-->
+
+<!--</script>-->
+{% endblock main-content %}

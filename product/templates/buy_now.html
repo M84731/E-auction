@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}login{% endblock title %}
+{% block main-content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{message}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+            <h4>My listings</h4><hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th> Interested Price</th>
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for buy in buyer %}
+                                 {% if buy.buyer == request.user %}
+                                        <tr>
+                                            <td>{{buy.Product_id}}</td>
+                                            <td>{{buy.Product_name}}</td>
+                                            <td>{{buy.buyer_username}}</td>
+                                            <td>{{buy.buyer_price}}</td>
+                                            <td>
+                                              {% if buy.status%}
+                                               <h4>Approved</h4>
+
+                                              {% endif %}
+                                            </td>
+                                        </tr>
+                              {% endif %}
+                     {% endfor %}
+                 </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock main-content %}

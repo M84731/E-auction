@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}login{% endblock title %}
+{% block main-content %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>{{message}}</strong>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% for product in products %}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Sale badge-->
+
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{product.sale_status}}
+                        </div>
+                        <!-- Product image-->
+
+                        <img class="card-img-top" src="{{product.product_image.url}}" height="150"alt="..."/>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{product.title}}</h5>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                                <!-- Product price-->
+                                <div class="fw-bold">Rs.{{product.price}}</div>
+                                <div class="fw-bold">{{product.city}},{{product.state}}</div>
+                            </div>
+                        </div>
+
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                  <a href="{% url 'my-edit' product.id %} "class="btn btn-danger">Edit</a>
+                                  <a href="{% url 'my-order-list' %} "class="btn btn-danger">Orders</a>
+                                  <a href="{% url 'my-delete' id=product.id %} "class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock main-content %}
